@@ -30,6 +30,7 @@ st.markdown(
         background: linear-gradient(180deg, #f3f4f2 0%, #f9faf8 100%);
         color: var(--ink);
         font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        overflow-x: hidden;
     }
     /* Reduce top padding */
     .stMainBlockContainer, [data-testid="stAppViewBlockContainer"] {
@@ -62,7 +63,7 @@ st.markdown(
         width: 100%;
     }
     /* Center the nav counter vertically */
-    .nav-counter-desktop {
+    .nav-counter-desktop, .nav-counter-mobile {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -106,19 +107,24 @@ st.markdown(
         }
         .st-key-mobile_controls {
             display: block !important;
-            padding-right:200px;
         }
         /* Keep mobile controls horizontal */
         .st-key-mobile_controls [data-testid="stHorizontalBlock"] {
             flex-wrap: nowrap !important;
             gap: 8px !important;
+            padding-right: 228px;
         }
-        /* Nav buttons close together */
+        /* Nav buttons sizing */
         .st-key-mobile_controls [data-testid="stHorizontalBlock"] > div:nth-child(2),
-        .st-key-mobile_controls [data-testid="stHorizontalBlock"] > div:nth-child(3) {
+        .st-key-mobile_controls [data-testid="stHorizontalBlock"] > div:nth-child(4) {
             flex: 0 0 40px !important;
             min-width: 40px !important;
             max-width: 40px !important;
+        }
+        /* Counter column */
+        .st-key-mobile_controls [data-testid="stHorizontalBlock"] > div:nth-child(3) {
+            flex: 0 0 50px !important;
+            min-width: 50px !important;
         }
         /* Fix popover button text visibility */
         .st-key-mobile_controls [data-testid="stPopover"] button,
@@ -330,9 +336,9 @@ with st.container(key="desktop_controls"):
     with desk_right:
         desktop_submitted = st.button("Random dish", key="desktop_btn")
 
-# Mobile layout - Books | ← | → | Random dish
+# Mobile layout - Books | ← | x/x | → | Random dish
 with st.container(key="mobile_controls"):
-    mob_col1, mob_col2, mob_col3, mob_col4 = st.columns([1.5, 0.1, 0.1, 1.5])
+    mob_col1, mob_col2, mob_col3, mob_col4, mob_col5 = st.columns([1.2, 0.3, 0.5, 0.3, 1.2])
     with mob_col1:
         with st.popover(f"Books ({len(st.session_state.selected_books)})"):
             mobile_selected = []
@@ -348,9 +354,11 @@ with st.container(key="mobile_controls"):
         can_go_prev_m = st.session_state.history_index > 0
         mobile_prev = st.button("←", key="mobile_prev", disabled=not can_go_prev_m)
     with mob_col3:
+        st.markdown(f'<div class="nav-counter-mobile">{counter_text}</div>', unsafe_allow_html=True)
+    with mob_col4:
         can_go_next_m = st.session_state.history_index < len(st.session_state.recipe_history) - 1
         mobile_next = st.button("→", key="mobile_next", disabled=not can_go_next_m)
-    with mob_col4:
+    with mob_col5:
         mobile_submitted = st.button("Random dish", key="mobile_btn")
 
 # Sync selections
