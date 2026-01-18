@@ -1,0 +1,7 @@
+*.epub
+epubs/
+app_debug.py
+app.py
+requirements.txt
+extract_images.py
+compress_images.py
