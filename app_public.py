@@ -112,7 +112,6 @@ st.markdown(
         .st-key-mobile_controls [data-testid="stHorizontalBlock"] {
             flex-wrap: nowrap !important;
             gap: 8px !important;
-            padding-right: 228px;
         }
         /* Nav buttons sizing */
         .st-key-mobile_controls [data-testid="stHorizontalBlock"] > div:nth-child(2),
